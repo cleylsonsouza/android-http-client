@@ -1,67 +1,67 @@
 package com.httpclientlib.server.connection.impl;
 
+import com.httpclientlib.server.connection.Connectable;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.httpclientlib.server.connection.Connectable;
-
 public class OpenHttpConnectionImpl implements Connectable {
 
-	private URL serverURL;
-	private HttpURLConnection connection;
+    private URL serverURL;
+    private HttpURLConnection connection;
 
-	public OpenHttpConnectionImpl(URL serverURL) {
-		this.serverURL = serverURL;
-	}
+    public OpenHttpConnectionImpl(URL serverURL) {
+        this.serverURL = serverURL;
+    }
 
-	@Override
-	public InputStream doPost(byte[] encodingBytes) throws IOException {
+    @Override
+    public InputStream doPost(byte[] encodingBytes) throws IOException {
 
-		OutputStream outputStream;
-		InputStream inputStream;
+        OutputStream outputStream;
+        InputStream inputStream;
 
-		connection = (HttpURLConnection) serverURL.openConnection();
-		connection.setRequestMethod("POST");
-		connection.setDoOutput(true);
-		connection.setDoInput(true);
-		connection.connect();
+        connection = (HttpURLConnection) serverURL.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+        connection.setDoInput(true);
+        connection.connect();
 
-		outputStream = connection.getOutputStream();
-		outputStream.write(encodingBytes);
-		outputStream.flush();
-		outputStream.close();
+        outputStream = connection.getOutputStream();
+        outputStream.write(encodingBytes);
+        outputStream.flush();
+        outputStream.close();
 
-		inputStream = connection.getInputStream();
+        inputStream = connection.getInputStream();
 
-		return inputStream;
-	}
+        return inputStream;
+    }
 
-	@Override
-	public InputStream doGet() throws IOException {
-		InputStream inputStream;
+    @Override
+    public InputStream doGet() throws IOException {
+        InputStream inputStream;
 
-		connection = (HttpURLConnection) serverURL.openConnection();
-		connection.setRequestMethod("GET");
-		connection.setDoOutput(false);
-		connection.setDoInput(true);
-		connection.connect();
+        connection = (HttpURLConnection) serverURL.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setDoOutput(false);
+        connection.setDoInput(true);
+        connection.connect();
 
-		inputStream = connection.getInputStream();
+        inputStream = connection.getInputStream();
 
-		return inputStream;
-	}
+        return inputStream;
+    }
 
-	@Override
-	public void disconnect() {
-		connection.disconnect();
-	}
+    @Override
+    public void disconnect() {
+        connection.disconnect();
+    }
 
-	@Override
-	public int getContentLength() {
-		return connection.getContentLength();
-	}
+    @Override
+    public int getContentLength() {
+        return connection.getContentLength();
+    }
 
 }

@@ -5,12 +5,12 @@ import java.io.InputStream;
 
 public interface Connectable {
 
-	public InputStream doPost(byte[] encodingBytes) throws IOException;
+    public InputStream doPost(byte[] encodingBytes) throws IOException;
 
-	public InputStream doGet() throws IOException;
-	
-	public int getContentLength();
+    public InputStream doGet() throws IOException;
 
-	public void disconnect();
+    public int getContentLength();
+
+    public void disconnect();
 
 }
